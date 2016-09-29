@@ -4,7 +4,6 @@
 import os
 import sys
 
-
 # Add vendor directory to module search path
 parent_dir = os.path.abspath(os.path.dirname(__file__))
 vendor_dir = os.path.join(parent_dir, 'vendor')
@@ -25,7 +24,7 @@ try:
     from opinel.utils_sts import *
 except Exception as e:
     print('Error: Scout2 now depends on the opinel package (previously AWSUtils submodule). Install all the requirements with the following command:')
-    print('  $ pip install -r requirements.txt')
+    print('  $ pip install --upgrade --force-reinstall -r requirements.txt -t vendor/')
 
     sys.exit()
 
