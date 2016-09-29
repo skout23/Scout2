@@ -2,6 +2,12 @@
 env/
 venv/
 
+# vendor path
+vendor/
+
+# pyenv python version
+.python-version
+
 *.py[cod]
 
 # C extensions
