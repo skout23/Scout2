@@ -1,0 +1,6 @@
+{
+  "description": "Scout2 installed with local vendor directory",
+  "hooks":{
+    "build": "pip install --upgrade --force-reinstall -r requirements.txt -t vendor/"
+  }
+}

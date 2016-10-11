@@ -424,6 +424,14 @@ AWSRULESET_FILE = 'aws_ruleset'
 REPORT_PATHDIR = '/tmp/output'
 AWSCONFIG_DIR = REPORT_PATHDIR + '/' + 'inc-awsconfig'
 REPORT_TITLE  = 'AWS Scout2 Report'
+REPORT_BUCKET = 'fs-scout-reports'
+
+def upload_scout_report():
+    s3 = boto3.resource('s3')
+    data = open(REPORT_PATHDIR + '/report.html', 'rb')
+    s3.Bucket(REPORT_BUCKET).put_object(Key='report.html', Body=data)
+    configjs = open(AWSCONFIG_DIR + '/aws_config.js', 'rb')
+    s3.Bucket(REPORT_BUCKET).put_object(Key='inc-awsconfig/aws_config.js', Body=configjs)
 
 def create_scout_report(environment_name, aws_config, force_write, debug):
     # Save data

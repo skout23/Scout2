@@ -223,6 +223,7 @@ def main(args):
 
     # Save data
     create_scout_report(environment_name, aws_config, args.force_write, args.debug)
+    upload_scout_report()
 
 
 ########################################
