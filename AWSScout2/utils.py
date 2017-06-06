@@ -198,7 +198,7 @@ def get_keys(src, dst, keys):
 #
 def no_camel(name):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()                                                                                                                                 
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
 
 ########################################
@@ -236,7 +236,7 @@ def match_instances_and_roles(ec2_config, iam_config):
 def create_report_metadata(aws_config, services):
     # Load resources and summaries metadata from file
     with open('metadata.json', 'rt') as f:
-        aws_config['metadata'] = json.load(f)    
+        aws_config['metadata'] = json.load(f)
     for service in services:
         for resource in aws_config['metadata'][service]['resources']:
             # full_path = path if needed
@@ -384,7 +384,7 @@ def get_value_at(all_info, current_path, key, to_string = False):
         for p in target_path:
           try:
             if type(target_obj) == list and type(target_obj[0]) == dict:
-                target_obj = target_obj[int(p)]                
+                target_obj = target_obj[int(p)]
             elif type(target_obj) == list:
                 target_obj = p
             elif p == '':
@@ -424,14 +424,15 @@ AWSRULESET_FILE = 'aws_ruleset'
 REPORT_PATHDIR = '/tmp/output'
 AWSCONFIG_DIR = REPORT_PATHDIR + '/' + 'inc-awsconfig'
 REPORT_TITLE  = 'AWS Scout2 Report'
-REPORT_BUCKET = 'fs-scout-reports'
+REPORT_BUCKET = 'fs-scout2-reports'
+AWS_GRANTEE = 'ID=d2a80d41996d14b8360b345c682d14064daff1723d371c909e5149a129bf18a6'
 
 def upload_scout_report():
     s3 = boto3.resource('s3')
     data = open(REPORT_PATHDIR + '/report.html', 'rb')
-    s3.Bucket(REPORT_BUCKET).put_object(Key='report.html', Body=data)
+    s3.Bucket(REPORT_BUCKET).put_object(Key='report.html', Body=data, ContentType='text/html', ACL='public-read')
     configjs = open(AWSCONFIG_DIR + '/aws_config.js', 'rb')
-    s3.Bucket(REPORT_BUCKET).put_object(Key='inc-awsconfig/aws_config.js', Body=configjs)
+    s3.Bucket(REPORT_BUCKET).put_object(Key='inc-awsconfig/aws_config.js', Body=configjs, ContentType='application/javascript', ACL='public-read')
 
 def create_scout_report(environment_name, aws_config, force_write, debug):
     # Save data
@@ -614,7 +615,7 @@ def open_file(environment_name, force_write, js_filename, quiet = False):
         return None
 
 #
-# Format and print the output of ListAll 
+# Format and print the output of ListAll
 #
 def generate_listall_output(lines, resources, aws_config, template, arguments, nodup = False):
     for line in lines:

@@ -1,6 +1,12 @@
 {
+  "name": "runscout2",
   "description": "Scout2 installed with local vendor directory",
-  "hooks":{
+  "runtime": "python2.7",
+  "handler": "main.handle",
+  "role": "arn:aws:iam::YOUR_ACCOUNT:role/YOUR_IAM_ROLE",
+  "memory": 1536,
+  "timeout": 300,
+  "hooks": {
     "build": "pip install --upgrade --force-reinstall -r requirements.txt -t vendor/"
   }
 }
