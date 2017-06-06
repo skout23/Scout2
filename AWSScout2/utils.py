@@ -419,10 +419,19 @@ def get_non_aws_id(name):
 # File read/write functions
 ########################################
 
-AWSCONFIG_DIR = 'inc-awsconfig'
 AWSCONFIG_FILE = 'aws_config'
 AWSRULESET_FILE = 'aws_ruleset'
+REPORT_PATHDIR = '/tmp/output'
+AWSCONFIG_DIR = REPORT_PATHDIR + '/' + 'inc-awsconfig'
 REPORT_TITLE  = 'AWS Scout2 Report'
+REPORT_BUCKET = 'fs-scout-reports'
+
+def upload_scout_report():
+    s3 = boto3.resource('s3')
+    data = open(REPORT_PATHDIR + '/report.html', 'rb')
+    s3.Bucket(REPORT_BUCKET).put_object(Key='report.html', Body=data)
+    configjs = open(AWSCONFIG_DIR + '/aws_config.js', 'rb')
+    s3.Bucket(REPORT_BUCKET).put_object(Key='inc-awsconfig/aws_config.js', Body=configjs)
 
 def create_scout_report(environment_name, aws_config, force_write, debug):
     # Save data
@@ -445,9 +454,9 @@ def create_scout_report(environment_name, aws_config, force_write, debug):
     if environment_name != 'default':
         def_report_filename, def_config_filename = get_scout2_paths('default')
         new_report_filename, new_config_filename = get_scout2_paths(environment_name)
-        new_file = 'report-' + environment_name + '.html'
+        new_file = REPORT_PATHDIR + '/' + 'report-' + environment_name + '.html'
     else:
-        new_file = 'report.html'
+        new_file = REPORT_PATHDIR + '/' + 'report.html'
     printInfo('Creating %s ...' % new_file)
     if prompt_4_overwrite(new_file, force_write):
         if os.path.exists(new_file):

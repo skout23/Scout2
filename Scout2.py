@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import sys
+
+# Add vendor directory to module search path
+parent_dir = os.path.abspath(os.path.dirname(__file__))
+vendor_dir = os.path.join(parent_dir, 'vendor')
+
+sys.path.append(vendor_dir)
+
 # Import stock packages
 import datetime
 import dateutil
 import json
-import sys
+
 
 # Import opinel
 try:
@@ -15,7 +24,7 @@ try:
     from opinel.utils_sts import *
 except Exception as e:
     print('Error: Scout2 now depends on the opinel package (previously AWSUtils submodule). Install all the requirements with the following command:')
-    print('  $ pip install -r requirements.txt')
+    print('  $ pip install --upgrade --force-reinstall -r requirements.txt -t vendor/')
 
     sys.exit()
 
@@ -214,6 +223,7 @@ def main(args):
 
     # Save data
     create_scout_report(environment_name, aws_config, args.force_write, args.debug)
+    upload_scout_report()
 
 
 ########################################

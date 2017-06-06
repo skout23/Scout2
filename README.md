@@ -20,8 +20,13 @@ To install Scout2:
 	# Clone this repository.
 	$ git clone https://github.com/nccgroup/Scout2
 
+	## for normal local install
 	# install required packages:
 	$ pip install -r requirements.txt
+
+	## for lambda function deployment prep
+	# install required packages to the vendor directory
+	$ pip install --upgrade --force-reinstall -r requirements.txt -t vendor/
 
 ## Requirements
 

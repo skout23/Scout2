@@ -2,6 +2,12 @@
 env/
 venv/
 
+# vendor path
+vendor/
+
+# pyenv python version
+.python-version
+
 *.py[cod]
 
 # C extensions
@@ -45,3 +51,4 @@ nosetests.xml
 # Data folder and files
 inc-awsconfig*
 report-*
+report.html
